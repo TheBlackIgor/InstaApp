@@ -25,6 +25,7 @@ import com.example.instaapp.data.Auth;
 import com.example.instaapp.data.IpConfig;
 import com.example.instaapp.data.LocalUser;
 import com.example.instaapp.databinding.ActivityMainBinding;
+import com.example.instaapp.utils.Dialogs;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -56,18 +57,14 @@ public class MainActivity extends AppCompatActivity {
         UsersApi usersApi = retrofit.create(UsersApi.class);
 
         if (LocalUser.getToken() != "" && LocalUser.getUsername() != "") {
-
             Call<Auth> call = usersApi.postAuthData("Bearer " + LocalUser.getToken());
             call.enqueue(new Callback<Auth>() {
                 @Override
                 public void onResponse(Call<Auth> call, Response<Auth> response) {
                     if(!response.body().isSuccess()){
-                        Intent myIntent = new Intent(MainActivity.this, LoginActivity.class);
-                        startActivity(myIntent);
-                        finish();
+                        logout();
                     }
                 }
-
                 @Override
                 public void onFailure(Call<Auth> call, Throwable t) {
                     Log.d("Login", t.toString());
@@ -90,27 +87,7 @@ public class MainActivity extends AppCompatActivity {
 
                     break;
                 case R.id.changeIP:
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setTitle("Change ip");
-
-                    final EditText input = new EditText(this);
-                    input.setInputType(InputType.TYPE_CLASS_TEXT);
-                    input.setText(IpConfig.getRawIp());
-                    builder.setView(input);
-
-                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            IpConfig.setIp(input.getText().toString());
-                        }
-                    });
-                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {}
-                    });
-
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
+                    Dialogs.changeIp(this);
                     break;
                 case R.id.logout:
                     SharedPreferences sharedPreferences = getSharedPreferences("data", Context.MODE_PRIVATE);

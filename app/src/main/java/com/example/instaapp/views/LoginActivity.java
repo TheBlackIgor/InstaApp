@@ -19,6 +19,7 @@ import com.example.instaapp.databinding.ActivityLoginBinding;
 import com.example.instaapp.databinding.ActivityMainBinding;
 import com.example.instaapp.requests.LoginRequest;
 import com.example.instaapp.responses.LoginResponse;
+import com.example.instaapp.utils.Dialogs;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -41,11 +42,6 @@ public class LoginActivity extends AppCompatActivity {
         View view = loginBinding.getRoot();
         setContentView(view);
 
-        Gson gson = new GsonBuilder()
-                .setLenient()
-                .create();
-
-        Log.d("ip", IpConfig.getIp());
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(IpConfig.getIp())
                 .addConverterFactory(GsonConverterFactory.create())
@@ -62,7 +58,12 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-
+        loginBinding.settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Dialogs.changeIp(LoginActivity.this);
+            }
+        });
 
         loginBinding.loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,7 +101,8 @@ public class LoginActivity extends AppCompatActivity {
                                 startActivity(intent);
                                 finish();
                             } else {
-                                Toast.makeText(LoginActivity.this, "WRONG DATA", Toast.LENGTH_SHORT).show();
+                                Snackbar s = Snackbar.make(view, "You sended wrong data", Snackbar.LENGTH_SHORT);
+                                s.show();
                             }
                         }
 

@@ -4,7 +4,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.RegisterActivity">
+    tools:context=".views.RegisterActivity"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="end"
+            android:paddingTop="10dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="7">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:id="@+id/settings"
+                    android:src="@drawable/options"/>
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="500dp"
@@ -61,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Password"
                 android:inputType="textPassword"
-                android:id="@+id/passwordText"
+                android:id="@+id/passwordInput"
                 android:textAlignment="textStart" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -81,6 +110,9 @@
             android:gravity="center"
             android:id="@+id/login"
             android:textColor="@color/purple_200"/>
+
+        <TextView android:autoLink="web"  android:layout_height="wrap_content" android:layout_width="match_parent"
+            android:id="@+id/confirmTextView"/>
 
     </LinearLayout>
 </LinearLayout>
