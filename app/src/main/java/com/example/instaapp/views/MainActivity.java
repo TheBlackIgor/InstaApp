@@ -46,10 +46,7 @@ public class MainActivity extends AppCompatActivity {
         ActivityMainBinding mainBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(mainBinding.getRoot());
 
-        SharedPreferences sharedPreferences = getSharedPreferences("data", Context.MODE_PRIVATE);
-        Log.d("share pref", sharedPreferences.getString("token", ""));
-        LocalUser.setToken(sharedPreferences.getString("token", ""));
-        LocalUser.setUsername(sharedPreferences.getString("username", ""));
+        readSharedPref();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(IpConfig.getIp())
@@ -77,9 +74,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }else if(LocalUser.getToken() == "" && LocalUser.getUsername() == ""){
-            Intent myIntent = new Intent(MainActivity.this, LoginActivity.class);
-            startActivity(myIntent);
-            finish();
+            logout();
         }
 
         AtomicReference<MenuItem> previouslySelected = new AtomicReference<>();
@@ -118,7 +113,12 @@ public class MainActivity extends AppCompatActivity {
                     dialog.show();
                     break;
                 case R.id.logout:
-
+                    SharedPreferences sharedPreferences = getSharedPreferences("data", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("username", "");
+                    editor.putString("token", "");
+                    editor.apply();
+                    logout();
                     break;
             }
 
@@ -135,5 +135,15 @@ public class MainActivity extends AppCompatActivity {
                 .beginTransaction()
                 .replace(R.id.root, fragment, tag)
                 .commit();
+    }
+    private void readSharedPref(){
+        SharedPreferences sharedPreferences = getSharedPreferences("data", Context.MODE_PRIVATE);
+        LocalUser.setToken(sharedPreferences.getString("token", ""));
+        LocalUser.setUsername(sharedPreferences.getString("username", ""));
+    }
+    private void logout(){
+        Intent myIntent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(myIntent);
+        finish();
     }
 }
