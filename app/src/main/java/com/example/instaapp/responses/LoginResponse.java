@@ -3,14 +3,14 @@ package com.example.instaapp.responses;
 public class LoginResponse {
     private boolean success;
     private String token;
-    private String username;
+    private String name;
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setName(String username) {
+        this.name = username;
     }
 
     public LoginResponse(String token){
@@ -20,7 +20,7 @@ public class LoginResponse {
     public LoginResponse(boolean success, String token, String username) {
         this.success = success;
         this.token = token;
-        this.username = username;
+        this.name = username;
     }
 
     public LoginResponse(boolean success, String token) {
@@ -48,12 +48,4 @@ public class LoginResponse {
         this.success = success;
     }
 
-    @Override
-    public String toString() {
-        return "LoginResponse{" +
-                "success=" + success +
-                ", token='" + token + '\'' +
-                ", username='" + username + '\'' +
-                '}';
-    }
 }

@@ -1,11 +1,11 @@
 package com.example.instaapp.api;
 
-import com.example.instaapp.data.Auth;
 import com.example.instaapp.models.Token;
 import com.example.instaapp.requests.LoginRequest;
 import com.example.instaapp.requests.RegisterRequest;
 import com.example.instaapp.responses.LoginResponse;
 import com.example.instaapp.responses.RegisterResponse;
+import com.example.instaapp.responses.ResponseAuth;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -26,7 +26,7 @@ public interface UsersApi {
     Call<LoginResponse> login(@Body LoginRequest loginRequest);
 
     @POST("/api/user/auth")
-    Call<Auth> postAuthData(@Header("Authorization") String token);
+    Call<ResponseAuth> postAuthData(@Header("Authorization") String token);
 
 //    @FormUrlEncoded
 //    @POST("/api/user/getInfo")

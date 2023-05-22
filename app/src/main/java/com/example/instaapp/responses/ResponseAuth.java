@@ -1,8 +1,8 @@
-package com.example.instaapp.data;
+package com.example.instaapp.responses;
 
-public class Auth {
+public class ResponseAuth {
     private boolean success;
-    public Auth(boolean success) {
+    public ResponseAuth(boolean success) {
         this.success = success;
     }
 

@@ -91,10 +91,10 @@ public class LoginActivity extends AppCompatActivity {
                             if (response.body().isSuccess()) {
                                 SharedPreferences sharedPreferences = getSharedPreferences("data", Context.MODE_PRIVATE);
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                                editor.putString("username", response.body().getUsername());
+                                editor.putString("name", response.body().getName());
                                 editor.putString("token", response.body().getToken());
                                 editor.apply();
-                                LocalUser.setUsername(response.body().getUsername());
+                                LocalUser.setName(response.body().getName());
                                 LocalUser.setToken(response.body().getToken());
 
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);

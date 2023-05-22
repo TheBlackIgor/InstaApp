@@ -21,10 +21,11 @@ import androidx.fragment.app.Fragment;
 
 import com.example.instaapp.R;
 import com.example.instaapp.api.UsersApi;
-import com.example.instaapp.data.Auth;
 import com.example.instaapp.data.IpConfig;
 import com.example.instaapp.data.LocalUser;
 import com.example.instaapp.databinding.ActivityMainBinding;
+import com.example.instaapp.fragments.HomePage;
+import com.example.instaapp.responses.ResponseAuth;
 import com.example.instaapp.utils.Dialogs;
 
 import java.util.concurrent.atomic.AtomicReference;
@@ -38,6 +39,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding mainBinding;
 
+    HomePage homePageFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +52,10 @@ public class MainActivity extends AppCompatActivity {
 
         readSharedPref();
 
+        homePageFragment = new HomePage();
+
+        replaceFragment(homePageFragment, "home");
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(IpConfig.getIp())
                 .addConverterFactory(GsonConverterFactory.create())
@@ -56,21 +63,24 @@ public class MainActivity extends AppCompatActivity {
 
         UsersApi usersApi = retrofit.create(UsersApi.class);
 
-        if (LocalUser.getToken() != "" && LocalUser.getUsername() != "") {
-            Call<Auth> call = usersApi.postAuthData("Bearer " + LocalUser.getToken());
-            call.enqueue(new Callback<Auth>() {
+        if (LocalUser.getToken() != "" && LocalUser.getName() != "") {
+            Call<ResponseAuth> call = usersApi.postAuthData("Bearer " + LocalUser.getToken());
+            call.enqueue(new Callback<ResponseAuth>() {
                 @Override
-                public void onResponse(Call<Auth> call, Response<Auth> response) {
+                public void onResponse(Call<ResponseAuth> call, Response<ResponseAuth> response) {
+                    Log.d("res", response.body().toString());
                     if(!response.body().isSuccess()){
                         logout();
                     }
                 }
                 @Override
-                public void onFailure(Call<Auth> call, Throwable t) {
+                public void onFailure(Call<ResponseAuth> call, Throwable t) {
                     Log.d("Login", t.toString());
                 }
             });
-        }else if(LocalUser.getToken() == "" && LocalUser.getUsername() == ""){
+        }else if(LocalUser.getToken() == "" && LocalUser.getName() == ""){
+            logout();
+        }else{
             logout();
         }
 
@@ -80,9 +90,7 @@ public class MainActivity extends AppCompatActivity {
 
         mainBinding.sideMenu.setNavigationItemSelectedListener(item-> {
             mainBinding.drawer.closeDrawer(GravityCompat.END);
-            int id = item.getItemId();
-            Log.d("Mess", String.valueOf(id));
-            switch(id){
+            switch(item.getItemId()){
                 case R.id.settings:
 
                     break;
@@ -116,11 +124,17 @@ public class MainActivity extends AppCompatActivity {
     private void readSharedPref(){
         SharedPreferences sharedPreferences = getSharedPreferences("data", Context.MODE_PRIVATE);
         LocalUser.setToken(sharedPreferences.getString("token", ""));
-        LocalUser.setUsername(sharedPreferences.getString("username", ""));
+        LocalUser.setName(sharedPreferences.getString("name", ""));
     }
     private void logout(){
         Intent myIntent = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(myIntent);
         finish();
     }
+//    public void setPost(){
+//        getSupportFragmentManager()
+//                .beginTransaction()
+//                .replace(R.id.root, postFragment, "post")
+//                .commit();
+//    }
 }
