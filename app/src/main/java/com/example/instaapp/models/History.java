@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class History {
     public String status;
-    public Date timestamp;
+    public long timestamp;
 
     public String getStatus() {
         return status;
@@ -14,15 +14,15 @@ public class History {
         this.status = status;
     }
 
-    public Date getTimestamp() {
+    public long getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Date timestamp) {
+    public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
     }
 
-    public History(String status, Date timestamp) {
+    public History(String status, long timestamp) {
         this.status = status;
         this.timestamp = timestamp;
     }

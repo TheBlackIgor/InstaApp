@@ -3,7 +3,7 @@ package com.example.instaapp.models;
 import java.util.ArrayList;
 
 public class Photo {
-    private int id;
+    private long id;
     private String album;
     private String originalName;
     private String url;
@@ -11,7 +11,7 @@ public class Photo {
     private ArrayList<History> history;
     private ArrayList<Tag> tags;
 
-    public Photo(int id, String album, String originalName, String url, String lastChange, ArrayList<History> history, ArrayList<Tag> tags) {
+    public Photo(long id, String album, String originalName, String url, String lastChange, ArrayList<History> history, ArrayList<Tag> tags) {
         this.id = id;
         this.album = album;
         this.originalName = originalName;
@@ -21,7 +21,7 @@ public class Photo {
         this.tags = tags;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -75,5 +75,18 @@ public class Photo {
 
     public void setTags(ArrayList<Tag> tags) {
         this.tags = tags;
+    }
+
+    @Override
+    public String toString() {
+        return "Photo{" +
+                "id=" + id +
+                ", album='" + album + '\'' +
+                ", originalName='" + originalName + '\'' +
+                ", url='" + url + '\'' +
+                ", lastChange='" + lastChange + '\'' +
+                ", history=" + history +
+                ", tags=" + tags +
+                '}';
     }
 }

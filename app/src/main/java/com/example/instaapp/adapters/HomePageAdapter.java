@@ -1,6 +1,7 @@
 package com.example.instaapp.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,8 +25,6 @@ public class HomePageAdapter extends RecyclerView.Adapter<HomePageAdapter.ViewHo
     private List<Photo> photosList;
     private Context context;
     public HomePageAdapter(List<Photo> list, Context context) {
-
-
         this.photosList = list;
         this.context = context;
     }
@@ -40,8 +39,9 @@ public class HomePageAdapter extends RecyclerView.Adapter<HomePageAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull HomePageAdapter.ViewHolder holder, int position) {
         Photo photo = photosList.get(position);
+        Log.d("INFO", photo.toString());
         Glide.with(holder.img.getContext())
-                .load(IpConfig.getIp() + "/api/photos/getfile/"+photo.getId())
+                .load(IpConfig.getIp() + "/api/photos/"+photo.getId())
                 .into(holder.img);
 //        holder.username.setText(photo.getAlbum());
 //        holder.username2.setText(photo.getAlbum());
