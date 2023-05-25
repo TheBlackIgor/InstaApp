@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.instaapp.R;
 import com.example.instaapp.data.IpConfig;
-import com.example.instaapp.models.ClickedPost;
+import com.example.instaapp.data.PickedPhoto;
 import com.example.instaapp.models.Photo;
 import com.example.instaapp.views.MainActivity;
 
@@ -49,11 +49,11 @@ public class HomePageAdapter extends RecyclerView.Adapter<HomePageAdapter.ViewHo
 //        holder.description.setText(photo.getLastChange());
 
         holder.img.setOnClickListener(v->{
-            ClickedPost.setPostURL(IpConfig.getIp() + "/api/photos/"+photo.getId());
-            ClickedPost.setDescription(photo.getLastChange());
-            ClickedPost.setUsername(photo.getAlbum());
-            ClickedPost.setTags(photo.getTags());
-//            ((MainActivity)context).setPost();
+            PickedPhoto.setPostURL(IpConfig.getIp() + "/api/photos/"+photo.getId());
+            PickedPhoto.setDescription(photo.getLastChange());
+            PickedPhoto.setUsername(photo.getAlbum());
+            PickedPhoto.setTags(photo.getTags());
+            ((MainActivity)context).showPost();
         });
 
 
@@ -68,7 +68,6 @@ public class HomePageAdapter extends RecyclerView.Adapter<HomePageAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView img;
         private TextView username;
-        private TextView username2;
         private TextView description;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

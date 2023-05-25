@@ -2,16 +2,11 @@ package com.example.instaapp.views;
 
 import static android.app.PendingIntent.getActivity;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.InputType;
 import android.util.Log;
-import android.view.MenuItem;
-import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -19,16 +14,16 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import com.example.instaapp.fragments.AddPost;
 import com.example.instaapp.R;
 import com.example.instaapp.api.UsersApi;
 import com.example.instaapp.data.IpConfig;
 import com.example.instaapp.data.LocalUser;
 import com.example.instaapp.databinding.ActivityMainBinding;
 import com.example.instaapp.fragments.HomePage;
+import com.example.instaapp.fragments.Post;
 import com.example.instaapp.responses.ResponseAuth;
 import com.example.instaapp.utils.Dialogs;
-
-import java.util.concurrent.atomic.AtomicReference;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding mainBinding;
 
     HomePage homePageFragment;
+    Post postFragment;
+    AddPost addPost;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +44,15 @@ public class MainActivity extends AppCompatActivity {
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
-        ActivityMainBinding mainBinding = ActivityMainBinding.inflate(getLayoutInflater());
+        mainBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(mainBinding.getRoot());
 
         readSharedPref();
 
+
         homePageFragment = new HomePage();
+        postFragment = new Post();
+        addPost = new AddPost();
 
         replaceFragment(homePageFragment, "home");
 
@@ -84,7 +84,21 @@ public class MainActivity extends AppCompatActivity {
             logout();
         }
 
-        AtomicReference<MenuItem> previouslySelected = new AtomicReference<>();
+        mainBinding.bottomMenu.setOnItemSelectedListener(item-> {
+            switch(item.getItemId()){
+                case R.id.home:
+                    replaceFragment(homePageFragment, "home");
+                    break;
+                case R.id.addPost:
+                    replaceFragment(addPost, "addPost");
+                    break;
+                case R.id.search:
+
+                    break;
+            }
+
+            return true;
+        });
 
         mainBinding.drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 
@@ -131,10 +145,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(myIntent);
         finish();
     }
-//    public void setPost(){
-//        getSupportFragmentManager()
-//                .beginTransaction()
-//                .replace(R.id.root, postFragment, "post")
-//                .commit();
-//    }
+    public void showPost(){
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.root, postFragment, "post")
+                .commit();
+    }
 }

@@ -1,8 +1,10 @@
-package com.example.instaapp.models;
+package com.example.instaapp.data;
+
+import com.example.instaapp.models.Tag;
 
 import java.util.ArrayList;
 
-public class ClickedPost {
+public class PickedPhoto {
     private static String username;
     private static String postURL;
     private static String description;
@@ -13,7 +15,7 @@ public class ClickedPost {
     }
 
     public static void setTags(ArrayList<Tag> tags) {
-        ClickedPost.tags = tags;
+        PickedPhoto.tags = tags;
     }
 
     public static String getUsername() {
@@ -21,7 +23,7 @@ public class ClickedPost {
     }
 
     public static void setUsername(String username) {
-        ClickedPost.username = username;
+        PickedPhoto.username = username;
     }
 
     public static String getPostURL() {
@@ -29,7 +31,7 @@ public class ClickedPost {
     }
 
     public static void setPostURL(String postURL) {
-        ClickedPost.postURL = postURL;
+        PickedPhoto.postURL = postURL;
     }
 
     public static String getDescription() {
@@ -37,6 +39,6 @@ public class ClickedPost {
     }
 
     public static void setDescription(String description) {
-        ClickedPost.description = description;
+        PickedPhoto.description = description;
     }
 }
