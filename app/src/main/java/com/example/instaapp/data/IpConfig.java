@@ -1,7 +1,7 @@
 package com.example.instaapp.data;
 
 public class IpConfig {
-    private static String ip = "192.168.0.154";
+    private static String ip = "10.18.70.45";
 
     public static void setIp(String newIp) {
         ip = newIp;

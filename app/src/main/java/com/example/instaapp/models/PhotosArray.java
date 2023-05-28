@@ -3,9 +3,9 @@ package com.example.instaapp.models;
 import java.util.ArrayList;
 
 public class PhotosArray {
-    ArrayList<Integer> photos;
+    ArrayList<Photo> photos;
 
-    public PhotosArray(ArrayList<Integer> photos){
+    public PhotosArray(ArrayList<Photo> photos){
         this.photos = photos;
     }
 }
