@@ -21,6 +21,7 @@ import com.example.instaapp.data.NewPostFile;
 import com.example.instaapp.databinding.ActivityCameraBinding;
 import com.google.common.util.concurrent.ListenableFuture;
 
+import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
 public class CameraActivity extends AppCompatActivity {
@@ -56,7 +57,7 @@ public class CameraActivity extends AppCompatActivity {
 
         cameraBinding.takePicture.setOnClickListener(v->{
             ContentValues contentValues = new ContentValues();
-            contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, "file_name_from_date");
+            contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, new Date().toString());
             contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg");
 
             ImageCapture.OutputFileOptions outputFileOptions =
@@ -70,7 +71,7 @@ public class CameraActivity extends AppCompatActivity {
                         @Override
                         public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
                             Log.d("Image", outputFileResults.toString());
-                            NewPostFile.image = outputFileResults;
+                            NewPostFile.uri = outputFileResults.getSavedUri();
 
                             Intent intent = new Intent(CameraActivity.this, CreatePostActivity.class);
                             startActivity(intent);

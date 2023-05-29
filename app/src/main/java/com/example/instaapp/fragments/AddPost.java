@@ -17,7 +17,9 @@ import android.view.ViewGroup;
 
 import com.example.instaapp.R;
 import com.example.instaapp.data.Image;
+import com.example.instaapp.data.NewPostFile;
 import com.example.instaapp.databinding.FragmentAddPostBinding;
+import com.example.instaapp.views.CameraActivity;
 import com.example.instaapp.views.MainActivity;
 
 
@@ -39,8 +41,10 @@ public class AddPost extends Fragment {
                             // There are no request codes
                             Intent data = result.getData();
                             try {
-//                                Imager.bitmap =  MediaStore.Images.Media.getBitmap(AddPhoto.this.getActivity().getContentResolver(), Uri.parse(data.getDataString()));
-                                Image.uri = Uri.parse(data.getDataString());
+//                                Imager.bitmap = + MediaStore.Images.Media.getBitmap(AddPhoto.this.getActivity().getContentResolver(), Uri.parse(data.getDataString()));
+                                NewPostFile.uri = Uri.parse(data.getDataString());
+                                Intent intent = new Intent(getContext(), CameraActivity.class);
+                                startActivity(intent);
 //                                ((MainActivity)getActivity()).replaceFragment();
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -58,11 +62,13 @@ public class AddPost extends Fragment {
 
             someActivityResultLauncher.launch(intent);
         });
+        addPostBinding.takePicture.setOnClickListener(v->{
+            Intent intent = new Intent(getContext(), CameraActivity.class);
+            startActivity(intent);
+        });
 
 
 
         return addPostBinding.getRoot();
-
-
     }
 }

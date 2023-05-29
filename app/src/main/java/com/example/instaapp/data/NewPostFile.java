@@ -1,7 +1,9 @@
 package com.example.instaapp.data;
 
+import android.net.Uri;
+
 import androidx.camera.core.ImageCapture;
 
 public class NewPostFile {
-    public static ImageCapture.OutputFileResults image;
+    public static Uri uri;
 }

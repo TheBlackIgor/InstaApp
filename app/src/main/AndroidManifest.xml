@@ -27,7 +27,7 @@
             android:name=".views.CreatePostActivity"
             android:exported="false" />
         <activity
-            android:name=".models.Tag$CameraActivity"
+            android:name=".views.CameraActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

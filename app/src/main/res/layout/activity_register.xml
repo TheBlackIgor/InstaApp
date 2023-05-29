@@ -43,7 +43,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:text="REGISTER"
+            android:text="SIGN UP"
             android:textColor="@color/purple_500"
             android:textSize="32dp"
             android:gravity="center"
@@ -97,7 +97,7 @@
         <com.google.android.material.button.MaterialButton
             android:layout_width="150dp"
             android:layout_height="50dp"
-            android:text="REGISTER"
+            android:text="Sign up"
             android:backgroundTint="@color/purple_700"
             android:id="@+id/registerButton" />
 
