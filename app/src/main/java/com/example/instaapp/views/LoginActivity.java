@@ -9,22 +9,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.instaapp.R;
 import com.example.instaapp.api.UsersApi;
-import com.example.instaapp.data.IpConfig;
-import com.example.instaapp.data.LocalUser;
+import com.example.instaapp.statik.IpConfig;
+import com.example.instaapp.statik.LocalUser;
 import com.example.instaapp.databinding.ActivityLoginBinding;
-import com.example.instaapp.databinding.ActivityMainBinding;
 import com.example.instaapp.requests.LoginRequest;
 import com.example.instaapp.responses.LoginResponse;
 import com.example.instaapp.utils.Dialogs;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import java.net.URI;
 
 import retrofit2.Call;
 import retrofit2.Callback;

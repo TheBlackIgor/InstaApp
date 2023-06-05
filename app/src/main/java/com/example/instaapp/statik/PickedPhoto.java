@@ -1,4 +1,4 @@
-package com.example.instaapp.data;
+package com.example.instaapp.statik;
 
 import com.example.instaapp.models.Tag;
 

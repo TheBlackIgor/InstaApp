@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.instaapp.api.PhotosApi;
-import com.example.instaapp.data.IpConfig;
+import com.example.instaapp.statik.IpConfig;
 import com.example.instaapp.models.Photo;
 
 import java.util.ArrayList;

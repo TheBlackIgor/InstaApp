@@ -15,12 +15,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.instaapp.R;
-import com.example.instaapp.data.Image;
-import com.example.instaapp.data.NewPostFile;
+import com.example.instaapp.statik.NewPostFile;
 import com.example.instaapp.databinding.FragmentAddPostBinding;
 import com.example.instaapp.views.CameraActivity;
-import com.example.instaapp.views.MainActivity;
 
 
 public class AddPost extends Fragment {

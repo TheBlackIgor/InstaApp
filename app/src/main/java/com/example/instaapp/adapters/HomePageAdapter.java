@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.instaapp.R;
-import com.example.instaapp.data.IpConfig;
-import com.example.instaapp.data.PickedPhoto;
+import com.example.instaapp.statik.IpConfig;
+import com.example.instaapp.statik.PickedPhoto;
 import com.example.instaapp.models.Photo;
 import com.example.instaapp.views.MainActivity;
 

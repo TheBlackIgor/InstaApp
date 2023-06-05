@@ -1,4 +1,4 @@
-package com.example.instaapp.data;
+package com.example.instaapp.statik;
 
 import android.net.Uri;
 

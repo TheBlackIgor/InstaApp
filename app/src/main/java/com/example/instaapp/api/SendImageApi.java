@@ -11,7 +11,7 @@ import retrofit2.http.Part;
 
 public interface SendImageApi {
     @Multipart
-    @POST("api/photos")
+    @POST("/api/photos")
     Call<Photo> sendImage(
             @Part MultipartBody.Part file,
             @Part("album") RequestBody album,

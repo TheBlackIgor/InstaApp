@@ -41,7 +41,7 @@ public class HomePage extends Fragment {
         homePageViewModel.setUp();
         homePageViewModel.getObservedPhotos().observe(getViewLifecycleOwner(), s -> {
 
-            HomePageAdapter adapter = new HomePageAdapter(s, ((MainActivity)getActivity()));
+            HomePageAdapter adapter = new HomePageAdapter(homePageViewModel.getObservedPhotos().getValue(), ((MainActivity)getActivity()));
             homeBinding.recyclerView.setAdapter(adapter);
         });
 

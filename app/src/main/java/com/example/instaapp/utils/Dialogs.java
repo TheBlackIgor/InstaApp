@@ -6,7 +6,7 @@ import android.content.DialogInterface;
 import android.text.InputType;
 import android.widget.EditText;
 
-import com.example.instaapp.data.IpConfig;
+import com.example.instaapp.statik.IpConfig;
 
 public class Dialogs {
     public static void changeIp(Context context) {

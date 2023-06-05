@@ -11,9 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.instaapp.R;
-import com.example.instaapp.data.PickedPhoto;
-import com.example.instaapp.data.IpConfig;
+import com.example.instaapp.statik.PickedPhoto;
 import com.example.instaapp.databinding.FragmentPostBinding;
 
 public class Post extends Fragment {

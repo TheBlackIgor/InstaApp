@@ -11,7 +11,7 @@
     <uses-feature android:name="android.hardware.camera" />
 
     <application
-        android:name=".data.LocalUser"
+        android:name=".statik.LocalUser"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"

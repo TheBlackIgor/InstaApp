@@ -2,21 +2,23 @@ package com.example.instaapp.views;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.database.Cursor;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 
 import com.example.instaapp.api.SendImageApi;
-import com.example.instaapp.data.Image;
-import com.example.instaapp.data.IpConfig;
-import com.example.instaapp.data.LocalUser;
-import com.example.instaapp.data.NewPostFile;
+import com.example.instaapp.statik.FileManager;
+import com.example.instaapp.statik.Image;
+import com.example.instaapp.statik.IpConfig;
+import com.example.instaapp.statik.LocalUser;
+import com.example.instaapp.statik.NewPostFile;
 import com.example.instaapp.databinding.ActivityCreatePostBinding;
 import com.example.instaapp.models.Photo;
 
 import java.io.File;
-import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -48,8 +50,7 @@ public class CreatePostActivity extends AppCompatActivity {
 
     }
     void sendImage() {
-        Log.d("path",Image.uri.getPath());
-        File file = new File(Image.uri.getPath());
+        File file = new File(FileManager.getPathFromUri(this, NewPostFile.uri));
         RequestBody fileRequest = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), fileRequest);
         RequestBody album = RequestBody.create(MultipartBody.FORM, LocalUser.getName());
@@ -74,6 +75,11 @@ public class CreatePostActivity extends AppCompatActivity {
 
             }
         });
+
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        finish();
     }
 
 }

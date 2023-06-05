@@ -2,24 +2,16 @@ package com.example.instaapp.views;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.instaapp.R;
 import com.example.instaapp.api.UsersApi;
-import com.example.instaapp.data.IpConfig;
-import com.example.instaapp.data.LocalUser;
-import com.example.instaapp.databinding.ActivityLoginBinding;
+import com.example.instaapp.statik.IpConfig;
 import com.example.instaapp.databinding.ActivityRegisterBinding;
-import com.example.instaapp.requests.LoginRequest;
 import com.example.instaapp.requests.RegisterRequest;
-import com.example.instaapp.responses.LoginResponse;
 import com.example.instaapp.responses.RegisterResponse;
 import com.example.instaapp.utils.Dialogs;
 import com.google.android.material.snackbar.Snackbar;

@@ -17,7 +17,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 
-import com.example.instaapp.data.NewPostFile;
+import com.example.instaapp.statik.NewPostFile;
 import com.example.instaapp.databinding.ActivityCameraBinding;
 import com.google.common.util.concurrent.ListenableFuture;
 
