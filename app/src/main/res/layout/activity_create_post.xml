@@ -15,19 +15,48 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="12"
+            android:layout_weight="10"
             android:id="@+id/image"/>
 
-        <EditText
-            android:layout_width="300dp"
-            android:layout_height="20dp"
-            android:id="@+id/description"
-            android:layout_weight="1"
-            android:hint="Description"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
+            android:layout_weight="1"
+            android:gravity="center"
+            >
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:textSize="8dp"
+                android:text="description"
+                android:backgroundTint="@color/purple_200"
+                android:id="@+id/description"
+                />
+            <LinearLayout
+                android:layout_width="30dp"
+                android:layout_height="10dp" />
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:text="Tags"
+                android:backgroundTint="@color/purple_200"
+                android:id="@+id/tags"
+                />
+            <LinearLayout
+                android:layout_width="30dp"
+                android:layout_height="10dp" />
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:text="maps"
+                android:backgroundTint="@color/purple_200"
+                android:id="@+id/maps"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:gravity="center"
             >
             <com.google.android.material.button.MaterialButton

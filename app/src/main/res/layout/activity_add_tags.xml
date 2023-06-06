@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_height="match_parent"
+    tools:context=".views.AddTagsActivity">
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/choiceGroup"
+        app:singleSelection="false"
+        android:layout_width="match_parent"
+        android:layout_weight="7"
+        android:layout_height="wrap_content">
+
+    </com.google.android.material.chip.ChipGroup>
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:text="Add tags"
+        android:backgroundTint="@color/purple_700"
+        android:id="@+id/addTags"
+        />
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

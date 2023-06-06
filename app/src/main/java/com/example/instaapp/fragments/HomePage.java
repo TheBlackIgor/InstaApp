@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ public class HomePage extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
+
         homeBinding = FragmentHomePageBinding.inflate(getLayoutInflater());
         homePageViewModel = new ViewModelProvider(this).get(HomePageViewModel.class);
 
@@ -39,6 +41,7 @@ public class HomePage extends Fragment {
 
         homeBinding.recyclerView.setLayoutManager(staggeredGridLayoutManager);
         homePageViewModel.setUp();
+
         homePageViewModel.getObservedPhotos().observe(getViewLifecycleOwner(), s -> {
 
             HomePageAdapter adapter = new HomePageAdapter(homePageViewModel.getObservedPhotos().getValue(), ((MainActivity)getActivity()));
@@ -46,5 +49,8 @@ public class HomePage extends Fragment {
         });
 
         return homeBinding.getRoot();
+    }
+    public void reload() {
+        homePageViewModel.setUp();
     }
 }

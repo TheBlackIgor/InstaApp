@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
 
         readSharedPref();
 
-
         homePageFragment = new HomePage();
         postFragment = new Post();
         addPost = new AddPost();
