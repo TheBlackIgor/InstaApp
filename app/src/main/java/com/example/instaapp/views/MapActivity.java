@@ -71,6 +71,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
             @Override
             public void onPlaceSelected(@NonNull Place place) {
+                try {
+                    geocode(place.getName());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
                 Log.i("xxx", "Place: " + place.getName() + ", " + place.getId());
             }
 
