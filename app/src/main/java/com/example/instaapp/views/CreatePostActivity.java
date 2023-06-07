@@ -63,10 +63,14 @@ public class CreatePostActivity extends AppCompatActivity {
     }
     void sendImage() {
         File file = new File(FileManager.getPathFromUri(this, NewPostFile.uri));
+        String tagsString = String.join(",", NewPostFile.tags);
+
         RequestBody fileRequest = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), fileRequest);
         RequestBody album = RequestBody.create(MultipartBody.FORM, LocalUser.getName());
-        RequestBody description = RequestBody.create(MultipartBody.FORM, createPostBinding.description.getText().toString());
+        RequestBody description = RequestBody.create(MultipartBody.FORM, NewPostFile.description);
+        RequestBody localization = RequestBody.create(MultipartBody.FORM, NewPostFile.localization);
+        RequestBody tags = RequestBody.create(MultipartBody.FORM, tagsString);
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(IpConfig.getIp())
                 .addConverterFactory(GsonConverterFactory.create())
@@ -74,7 +78,7 @@ public class CreatePostActivity extends AppCompatActivity {
 
         SendImageApi uploadPhotoAPI = retrofit.create(SendImageApi.class);
 
-        Call<Photo> call = uploadPhotoAPI.sendImage(body, album, description);
+        Call<Photo> call = uploadPhotoAPI.sendImage(body, album, description, localization, tags);
         call.enqueue(new Callback<Photo>() {
             @Override
             public void onResponse(Call<Photo> call, Response<Photo> response) {
@@ -93,4 +97,5 @@ public class CreatePostActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
 }

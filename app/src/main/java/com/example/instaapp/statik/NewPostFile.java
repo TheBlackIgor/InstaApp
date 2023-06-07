@@ -11,4 +11,5 @@ public class NewPostFile {
     public static Uri uri;
     public static String description;
     public static ArrayList<String> tags = new ArrayList<>();
+    public static String localization = null;
 }

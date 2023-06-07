@@ -15,6 +15,8 @@ public interface SendImageApi {
     Call<Photo> sendImage(
             @Part MultipartBody.Part file,
             @Part("album") RequestBody album,
-            @Part("description") RequestBody description
+            @Part("description") RequestBody description,
+            @Part("localization") RequestBody localization,
+            @Part("tags") RequestBody tags
     );
 }

@@ -13,6 +13,7 @@ import android.util.Log;
 
 import com.example.instaapp.R;
 import com.example.instaapp.databinding.ActivityMapBinding;
+import com.example.instaapp.statik.NewPostFile;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -77,6 +78,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     throw new RuntimeException(e);
                 }
                 Log.i("xxx", "Place: " + place.getName() + ", " + place.getId());
+                NewPostFile.localization = place.getName();
             }
 
 
