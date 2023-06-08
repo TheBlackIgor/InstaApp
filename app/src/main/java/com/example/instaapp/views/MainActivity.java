@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import com.example.instaapp.fragments.AddPost;
 import com.example.instaapp.R;
 import com.example.instaapp.api.UsersApi;
+import com.example.instaapp.fragments.ProfileFragment;
 import com.example.instaapp.statik.IpConfig;
 import com.example.instaapp.statik.LocalUser;
 import com.example.instaapp.databinding.ActivityMainBinding;
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     HomePage homePageFragment;
     Post postFragment;
     AddPost addPost;
+    ProfileFragment profileFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +54,9 @@ public class MainActivity extends AppCompatActivity {
         homePageFragment = new HomePage();
         postFragment = new Post();
         addPost = new AddPost();
+        profileFragment = new ProfileFragment();
 
-        replaceFragment(homePageFragment, "home");
+        replaceFragment(homePageFragment, "homePage");
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(IpConfig.getIp())
@@ -92,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragment(addPost, "addPost");
                     break;
                 case R.id.profile:
+                    replaceFragment(profileFragment, "profileFragment");
                     break;
             }
 

@@ -42,49 +42,79 @@ public class ShowLocalizationActivity extends AppCompatActivity implements OnMap
 
     private ActivityShowLocalizationBinding showLocalizationBinding;
     private GoogleMap map;
+    private List<Address> list;
+    private Geocoder geocoder;
+    private SupportMapFragment mapFragment;
 
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d("Loc1234", "XDDDDDD");
-        super.onCreate(savedInstanceState);
-        showLocalizationBinding = ActivityShowLocalizationBinding.inflate(getLayoutInflater());
-        setContentView(showLocalizationBinding.getRoot());
 
-        SupportMapFragment mapFragment =
+        super.onCreate(savedInstanceState);
+        Log.d("INFO1", "XDDDDDDDDDDDDDDD");
+        showLocalizationBinding = ActivityShowLocalizationBinding.inflate(getLayoutInflater());
+        Log.d("INFO2", "XDDDDDDDDDDDDDDD");
+        setContentView(showLocalizationBinding.getRoot());
+        Log.d("INFO3", "XDDDDDDDDDDDDDDD");
+
+        mapFragment =
                 (SupportMapFragment) getSupportFragmentManager()
                         .findFragmentById(R.id.map_fragment2);
-
-
+        Log.d("INFO4", "XDDDDDDDDDDDDDDD");
         mapFragment.getMapAsync(this);
-    }
-    private void getPlaceById(String placeId) {
-        List<Place.Field> placeFields = Arrays.asList(Place.Field.NAME, Place.Field.LAT_LNG);
-        FetchPlaceRequest request = FetchPlaceRequest.newInstance(placeId, placeFields);
+        Log.d("INFO5", "XDDDDDDDDDDDDDDD");
+        geocoder = new Geocoder(this);
+        Log.d("INFO6", "XDDDDDDDDDDDDDDD");
         Places.initialize(getApplicationContext(), "AIzaSyAwu6FO-Vb-ITp39cSydpdr7e6yYjdHP5k");
+        Log.d("INFO7", "XDDDDDDDDDDDDDDD");
         PlacesClient placesClient = Places.createClient(this);
-
-        placesClient.fetchPlace(request).addOnSuccessListener((response) -> {
-            Place place = response.getPlace();
-            LatLng latLng = place.getLatLng();
-            map.addMarker(new MarkerOptions().position(latLng).title(place.getName()));
-            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng , 10);
-            map.moveCamera(cameraUpdate);
-        }).addOnFailureListener((exception) -> {
-            exception.printStackTrace();
-        });
+        Log.d("INFO8", "XDDDDDDDDDDDDDDD");
     }
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        map = googleMap;
+    private void geocode(String locationName) throws IOException {
+        Log.d("Location123", locationName);
+        list = geocoder.getFromLocationName(locationName, 1);
 
+        double latitude = list.get(0).getLatitude();
+        double longitude = list.get(0).getLongitude();
+
+        LatLng latLng = new LatLng(latitude, longitude);
+        Log.d("latleng", String.valueOf(latLng));
+        Log.d("MAPP", map.toString());
+        map.addMarker(new MarkerOptions().position(latLng).title("Marker"));
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng , 10);
+//        map.moveCamera(cameraUpdate);
+        map.animateCamera(cameraUpdate);
+    }
+
+
+
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+        map = googleMap;
+        Log.d("INFO9", "XDDDDDDDDDDDDDDD");
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
+        Log.d("INFO10", "XDDDDDDDDDDDDDDD");
         map.setMyLocationEnabled(true);
         map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         map.getUiSettings().setZoomControlsEnabled(true);
         map.getUiSettings().setCompassEnabled(true);
 
-        getPlaceById(PickedPhoto.getLocalization());
+        Log.d("INFO11", "XDDDDDDDDDDDDDDD");
+        LocationManager locationManager = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            locationManager = (LocationManager) getSystemService(ShowLocalizationActivity.this.LOCATION_SERVICE);
+        }
+        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+        if (location != null) {
+            LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f));
+        }
+
+        try {
+            geocode(PickedPhoto.getLocalization());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

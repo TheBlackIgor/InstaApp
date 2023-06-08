@@ -78,10 +78,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 try {
                     Log.d("localization", place.getName());
                     geocode(place.getName());
+                    NewPostFile.localization = place.getName();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-                NewPostFile.localization = place.getId();
+
             }
 
             @Override

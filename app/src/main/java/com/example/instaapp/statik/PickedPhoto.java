@@ -1,5 +1,6 @@
 package com.example.instaapp.statik;
 
+import com.example.instaapp.models.PostType;
 import com.example.instaapp.models.Tag;
 
 import java.util.ArrayList;
@@ -10,6 +11,11 @@ public class PickedPhoto {
     private static String description;
     private static ArrayList<String> tags;
     private static String localization;
+    public static void setFiletype(PostType filetype) {
+        PickedPhoto.filetype = filetype;
+    }
+
+    public static PostType filetype;
 
     public static ArrayList<String> getTags() {
         return tags;

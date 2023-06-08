@@ -92,12 +92,14 @@ public class CameraActivity extends AppCompatActivity {
                     });
         });
         cameraBinding.video.setOnClickListener(v->{
-            recording = !recording;
             if(recording){
                 videoCapture.stopRecording();
+                cameraBinding.rec.setText("");
             }else{
                 recordVideo();
+                cameraBinding.rec.setText("REC");
             }
+            recording = !recording;
         });
     }
 
@@ -121,6 +123,7 @@ public class CameraActivity extends AppCompatActivity {
             }
         }, ContextCompat.getMainExecutor(this));
     }
+    @SuppressLint("RestrictedApi")
     private void bindPreview(@NonNull ProcessCameraProvider cameraProvider) {
         Preview preview = new Preview.Builder().build();
 
@@ -129,13 +132,17 @@ public class CameraActivity extends AppCompatActivity {
                         .setTargetRotation(cameraBinding.camera.getDisplay().getRotation())
                         .build();
 
+        videoCapture = new VideoCapture.Builder()
+                .setTargetRotation(cameraBinding.camera.getDisplay().getRotation())
+                .build();
+
         CameraSelector cameraSelector = new CameraSelector.Builder()
                 .requireLensFacing(CameraSelector.LENS_FACING_BACK)
                 .build();
 
         preview.setSurfaceProvider(cameraBinding.camera.getSurfaceProvider());
 
-        cameraProvider.bindToLifecycle(this, cameraSelector, imageCapture, preview);
+        cameraProvider.bindToLifecycle(this, cameraSelector, imageCapture,videoCapture, preview);
     }
 
 

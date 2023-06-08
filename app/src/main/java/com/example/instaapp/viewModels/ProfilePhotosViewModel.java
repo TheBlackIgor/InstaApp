@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel;
 import com.example.instaapp.api.PhotosApi;
 import com.example.instaapp.models.Photo;
 import com.example.instaapp.statik.IpConfig;
+import com.example.instaapp.statik.LocalUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,8 +35,8 @@ public class ProfilePhotosViewModel extends ViewModel {
 
         PhotosApi getPhotosAPI = retrofit.create(PhotosApi.class);
 
-        Call<List<Photo>> call = getPhotosAPI.getAlbumPhotos(username);
-
+        Call<List<Photo>> call = getPhotosAPI.getAlbumPhotos(LocalUser.getShowingName());
+        Log.d("USERNAME", LocalUser.getShowingName());
         call.enqueue(new Callback<List<Photo>>() {
             @Override
             public void onResponse(Call<List<Photo>> call, Response<List<Photo>> response) {
@@ -51,7 +52,6 @@ public class ProfilePhotosViewModel extends ViewModel {
     }
     public ProfilePhotosViewModel() {
         this.photosList = new MutableLiveData<>();
-
     }
 
     public MutableLiveData<List<Photo>> getObservedPhotos() {
