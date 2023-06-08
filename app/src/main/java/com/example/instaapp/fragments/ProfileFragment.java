@@ -84,7 +84,6 @@ public class ProfileFragment extends Fragment {
             userProfileBinding.recyclerView.setAdapter(adapter);
         });
 
-        ////////////////////////////////
         userProfileBinding.username.setText(LocalUser.getShowingName());
 
 

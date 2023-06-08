@@ -3,13 +3,16 @@ package com.example.instaapp.views;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -46,8 +49,11 @@ public class ShowLocalizationActivity extends AppCompatActivity implements OnMap
     private Geocoder geocoder;
     private SupportMapFragment mapFragment;
 
-    protected void onCreate(Bundle savedInstanceState) {
+    private String[] REQUIRED_PERMISSIONS = new String[]{
+            "android.permission.ACCESS_FINE_LOCATION"
+    };
 
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         showLocalizationBinding = ActivityShowLocalizationBinding.inflate(getLayoutInflater());
         setContentView(showLocalizationBinding.getRoot());
@@ -76,37 +82,54 @@ public class ShowLocalizationActivity extends AppCompatActivity implements OnMap
         map.animateCamera(cameraUpdate);
     }
 
-
+    private boolean checkIfPermissionsGranted() {
+        for (String permission : REQUIRED_PERMISSIONS) {
+            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        //
+        switch (requestCode) {
+            case 100:
+                if (grantResults.length > 0 &&
+                        grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                } else {
+                    //nie
+                }
+                break;
+
+        }
+
+    }
+
+
+    @SuppressLint("MissingPermission")
+    @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
-        map = googleMap;
-        Log.d("INFO9", "XDDDDDDDDDDDDDDD");
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        Log.d("INFO10", "XDDDDDDDDDDDDDDD");
-        map.setMyLocationEnabled(true);
-        map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        map.getUiSettings().setZoomControlsEnabled(true);
-        map.getUiSettings().setCompassEnabled(true);
-
-        Log.d("INFO11", "XDDDDDDDDDDDDDDD");
-        LocationManager locationManager = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-            locationManager = (LocationManager) getSystemService(ShowLocalizationActivity.this.LOCATION_SERVICE);
-        }
-        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
-        if (location != null) {
-            LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f));
+        if (!checkIfPermissionsGranted()) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(REQUIRED_PERMISSIONS, 100);
+            }
+        } else {
+            map = googleMap;
+            map.setMyLocationEnabled(true);
+            map.getUiSettings().setZoomControlsEnabled(true);
+            map.getUiSettings().setCompassEnabled(true);
+            try {
+                geocode(PickedPhoto.getLocalization());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
-        try {
-            geocode(PickedPhoto.getLocalization());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
     }
 }
