@@ -69,6 +69,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/tags"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:id="@+id/filters">
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:text="Flip"
+                android:backgroundTint="@color/purple_700"
+                android:id="@+id/flip" />
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:text="Negate"
+                android:backgroundTint="@color/purple_700"
+                android:id="@+id/negate" />
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:text="BNW"
+                android:backgroundTint="@color/purple_700"
+                android:id="@+id/BNW" />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>
 </FrameLayout>

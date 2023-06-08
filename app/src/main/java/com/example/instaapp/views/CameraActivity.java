@@ -64,7 +64,8 @@ public class CameraActivity extends AppCompatActivity {
 
         cameraBinding.takePicture.setOnClickListener(v->{
             ContentValues contentValues = new ContentValues();
-            contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, new Date().toString());
+            long newPic = System.currentTimeMillis();
+            contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, newPic);
             contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg");
 
             ImageCapture.OutputFileOptions outputFileOptions =

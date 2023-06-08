@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.instaapp.R;
 import com.example.instaapp.models.Photo;
 import com.example.instaapp.statik.IpConfig;
@@ -37,10 +38,17 @@ public class AdapterProfilePics extends RecyclerView.Adapter<AdapterProfilePics.
     @Override
     public void onBindViewHolder(@NonNull AdapterProfilePics.ViewHolder holder, int position) {
         Photo photo = photosList.get(position);
-        Glide.with(holder.img.getContext())
-                .load(IpConfig.getIp() + "/api/photos/"+photo.getId())
-                .skipMemoryCache(true)
-                .into(holder.img);
+        if(photo.getExtension().equals("mp4"))
+            Glide.with(holder.img.getContext())
+                    .load(IpConfig.getIp() + "/api/photos/"+photo.getId())
+                    .skipMemoryCache(true)
+                    .into(holder.img);
+        else
+            Glide.with(holder.img.getContext())
+                    .load(IpConfig.getIp() + "/api/photos/"+photo.getId())
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
+                    .into(holder.img);
 
 
         holder.img.setOnClickListener(v->{

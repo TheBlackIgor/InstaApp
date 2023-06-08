@@ -1,5 +1,6 @@
 package com.example.instaapp.statik;
 
+import com.example.instaapp.models.Photo;
 import com.example.instaapp.models.PostType;
 import com.example.instaapp.models.Tag;
 
@@ -14,6 +15,7 @@ public class PickedPhoto {
     public static void setFiletype(PostType filetype) {
         PickedPhoto.filetype = filetype;
     }
+    public static Photo photo;
 
     public static PostType filetype;
 

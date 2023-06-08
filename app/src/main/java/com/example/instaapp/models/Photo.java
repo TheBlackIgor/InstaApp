@@ -12,9 +12,10 @@ public class Photo {
     private ArrayList<String> tags;
     private String localization;
     private String description;
+    private String extension;
 
 
-    public Photo(long id, String album, String originalName, String url, String lastChange, ArrayList<History> history,String description, ArrayList<String> tags,String localization) {
+    public Photo(long id, String album, String originalName, String url, String lastChange, ArrayList<History> history,String description, ArrayList<String> tags,String localization, String extension) {
         this.id = id;
         this.album = album;
         this.originalName = originalName;
@@ -24,6 +25,15 @@ public class Photo {
         this.history = history;
         this.tags = tags;
         this.localization = localization;
+        this.extension = extension;
+    }
+
+    public String getExtension() {
+        return extension;
+    }
+
+    public void setExtension(String extension) {
+        this.extension = extension;
     }
 
     public long getId() {

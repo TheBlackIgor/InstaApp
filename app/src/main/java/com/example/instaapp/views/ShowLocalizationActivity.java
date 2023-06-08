@@ -49,24 +49,16 @@ public class ShowLocalizationActivity extends AppCompatActivity implements OnMap
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        Log.d("INFO1", "XDDDDDDDDDDDDDDD");
         showLocalizationBinding = ActivityShowLocalizationBinding.inflate(getLayoutInflater());
-        Log.d("INFO2", "XDDDDDDDDDDDDDDD");
         setContentView(showLocalizationBinding.getRoot());
-        Log.d("INFO3", "XDDDDDDDDDDDDDDD");
 
         mapFragment =
                 (SupportMapFragment) getSupportFragmentManager()
                         .findFragmentById(R.id.map_fragment2);
-        Log.d("INFO4", "XDDDDDDDDDDDDDDD");
         mapFragment.getMapAsync(this);
-        Log.d("INFO5", "XDDDDDDDDDDDDDDD");
         geocoder = new Geocoder(this);
-        Log.d("INFO6", "XDDDDDDDDDDDDDDD");
         Places.initialize(getApplicationContext(), "AIzaSyAwu6FO-Vb-ITp39cSydpdr7e6yYjdHP5k");
-        Log.d("INFO7", "XDDDDDDDDDDDDDDD");
         PlacesClient placesClient = Places.createClient(this);
-        Log.d("INFO8", "XDDDDDDDDDDDDDDD");
     }
     private void geocode(String locationName) throws IOException {
         Log.d("Location123", locationName);

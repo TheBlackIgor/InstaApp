@@ -35,7 +35,7 @@ public class ProfilePhotosViewModel extends ViewModel {
 
         PhotosApi getPhotosAPI = retrofit.create(PhotosApi.class);
 
-        Call<List<Photo>> call = getPhotosAPI.getAlbumPhotos(LocalUser.getShowingName());
+        Call<List<Photo>> call = getPhotosAPI.getAlbumPhotos(LocalUser.getName());
         Log.d("USERNAME", LocalUser.getShowingName());
         call.enqueue(new Callback<List<Photo>>() {
             @Override

@@ -42,10 +42,18 @@ public class HomePageAdapter extends RecyclerView.Adapter<HomePageAdapter.ViewHo
     public void onBindViewHolder(@NonNull HomePageAdapter.ViewHolder holder, int position) {
         Photo photo = photosList.get(position);
         Log.d("INFO", photo.toString());
+        if(photo.getExtension().equals("mp4"))
         Glide.with(holder.img.getContext())
                 .load(IpConfig.getIp() + "/api/photos/"+photo.getId())
                 .skipMemoryCache(true)
                 .into(holder.img);
+        else
+            Glide.with(holder.img.getContext())
+                    .load(IpConfig.getIp() + "/api/photos/"+photo.getId())
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
+                    .into(holder.img);
+
 
         holder.img.setOnClickListener(v->{
             if(photo.getUrl().contains(".mp4")){
@@ -60,6 +68,7 @@ public class HomePageAdapter extends RecyclerView.Adapter<HomePageAdapter.ViewHo
             PickedPhoto.setTags(photo.getTags());
             PickedPhoto.setDescription(photo.getDescription());
             PickedPhoto.setLocalization(photo.getLocalization());
+            PickedPhoto.photo = photo;
             ((MainActivity)context).showPost();
         });
     }
