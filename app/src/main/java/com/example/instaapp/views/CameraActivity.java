@@ -1,14 +1,17 @@
 package com.example.instaapp.views  ;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.camera.core.CameraSelector;
 import androidx.camera.core.ImageCapture;
 import androidx.camera.core.ImageCaptureException;
 import androidx.camera.core.Preview;
+import androidx.camera.core.VideoCapture;
 import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.core.content.ContextCompat;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -38,18 +41,22 @@ public class CameraActivity extends AppCompatActivity {
 
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
     private ImageCapture imageCapture;
+    private VideoCapture videoCapture;
 
+    boolean recording;
 
+    @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         cameraBinding = ActivityCameraBinding.inflate(getLayoutInflater());
         setContentView(cameraBinding.getRoot());
+        recording = false;
 
         if (!checkIfPermissionsGranted()) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions(REQUIRED_PERMISSIONS, PERMISSIONS_REQUEST_CODE);
-                if(checkIfPermissionsGranted()) startCamera();
+                startCamera();
             }
         } else {
             startCamera();
@@ -71,6 +78,7 @@ public class CameraActivity extends AppCompatActivity {
                         @Override
                         public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
                             Log.d("Image", outputFileResults.toString());
+                            NewPostFile.type = "image";
                             NewPostFile.uri = outputFileResults.getSavedUri();
 
                             Intent intent = new Intent(CameraActivity.this, CreatePostActivity.class);
@@ -83,7 +91,14 @@ public class CameraActivity extends AppCompatActivity {
                         }
                     });
         });
-
+        cameraBinding.video.setOnClickListener(v->{
+            recording = !recording;
+            if(recording){
+                videoCapture.stopRecording();
+            }else{
+                recordVideo();
+            }
+        });
     }
 
     private boolean checkIfPermissionsGranted() {
@@ -121,6 +136,41 @@ public class CameraActivity extends AppCompatActivity {
         preview.setSurfaceProvider(cameraBinding.camera.getSurfaceProvider());
 
         cameraProvider.bindToLifecycle(this, cameraSelector, imageCapture, preview);
+    }
+
+
+    @SuppressLint({"MissingPermission", "RestrictedApi"})
+    private void recordVideo() {
+        String timestamp = String.valueOf(new Date().getTime());
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME,timestamp);
+        contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "video/mp4");
+
+        videoCapture.startRecording(
+                new VideoCapture.OutputFileOptions.Builder(
+                        this.getContentResolver(),
+                        MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
+                        contentValues
+                ).build(),
+                ContextCompat.getMainExecutor(getBaseContext()),
+                new VideoCapture.OnVideoSavedCallback() {
+                    @Override
+                    public void onVideoSaved(@NonNull VideoCapture.OutputFileResults outputFileResults) {
+                        Intent intent = new Intent(CameraActivity.this, CreatePostActivity.class);
+                        NewPostFile.uri = outputFileResults.getSavedUri();
+                        NewPostFile.type = "video";
+                        startActivity(intent);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onError(int videoCaptureError, @NonNull String message, @Nullable Throwable cause) {
+                        // error
+                        Log.d("ERROR" , message);
+                    }
+                });
+
+
     }
 
 }

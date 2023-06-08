@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".models.Tag$CameraActivity">
+    tools:context=".views.CameraActivity">
 
     <androidx.camera.view.PreviewView
         android:background="#000000"
@@ -44,8 +44,8 @@
                 <ImageView
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:src="@drawable/cameraswitch"
-                    android:id="@+id/switchCamera"/>
+                    android:src="@drawable/videocam"
+                    android:id="@+id/video"/>
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>

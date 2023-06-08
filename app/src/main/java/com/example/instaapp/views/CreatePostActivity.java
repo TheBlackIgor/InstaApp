@@ -6,6 +6,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.MediaController;
+import android.widget.VideoView;
 
 import com.example.instaapp.api.SendImageApi;
 import com.example.instaapp.fragments.HomePage;
@@ -34,6 +39,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CreatePostActivity extends AppCompatActivity {
     ActivityCreatePostBinding createPostBinding;
+    private ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +48,28 @@ public class CreatePostActivity extends AppCompatActivity {
         setContentView(createPostBinding.getRoot());
 
 
-        createPostBinding.image.setImageURI(NewPostFile.uri);
+//        createPostBinding.image.setImageURI(NewPostFile.uri);
+
+        if (NewPostFile.type.equals("image")) {
+            imageView = new ImageView(this);
+            imageView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            createPostBinding.newPostContent.addView(imageView);
+            imageView.setImageURI(NewPostFile.uri);
+//            Glide.with(imageView.getContext()).load(uri).into(imageView);
+        } else {
+            VideoView videoView = new VideoView(this);
+            videoView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            createPostBinding.newPostContent.addView(videoView);
+
+            videoView.setVideoURI(NewPostFile.uri);
+            MediaController mediaController = new MediaController(this);
+
+            mediaController.setAnchorView(videoView);
+            mediaController.setMediaPlayer(videoView);
+            videoView.setMediaController(mediaController);
+            videoView.start();
+        }
+
         createPostBinding.cancel.setOnClickListener(v->{
             finish();
         });
