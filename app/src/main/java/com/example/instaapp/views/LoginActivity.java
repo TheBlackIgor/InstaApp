@@ -85,10 +85,14 @@ public class LoginActivity extends AppCompatActivity {
                                 SharedPreferences sharedPreferences = getSharedPreferences("data", Context.MODE_PRIVATE);
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putString("name", response.body().getName());
+                                editor.putString("showingName", response.body().getShowingName());
+                                Log.d("SHOWINGNAME", response.body().getShowingName());
                                 editor.putString("token", response.body().getToken());
+
                                 editor.apply();
                                 LocalUser.setName(response.body().getName());
                                 LocalUser.setToken(response.body().getToken());
+                                LocalUser.setShowingName(response.body().getShowingName());
 
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 startActivity(intent);

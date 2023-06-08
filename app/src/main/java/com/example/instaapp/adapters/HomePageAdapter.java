@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.instaapp.R;
 import com.example.instaapp.statik.IpConfig;
 import com.example.instaapp.statik.PickedPhoto;
@@ -42,22 +43,19 @@ public class HomePageAdapter extends RecyclerView.Adapter<HomePageAdapter.ViewHo
         Log.d("INFO", photo.toString());
         Glide.with(holder.img.getContext())
                 .load(IpConfig.getIp() + "/api/photos/"+photo.getId())
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
                 .into(holder.img);
-//        holder.username.setText(photo.getAlbum());
-//        holder.username2.setText(photo.getAlbum());
-
-//        holder.description.setText(photo.getLastChange());
 
         holder.img.setOnClickListener(v->{
             PickedPhoto.setPostURL(IpConfig.getIp() + "/api/photos/"+photo.getId());
             PickedPhoto.setDescription(photo.getLastChange());
             PickedPhoto.setUsername(photo.getAlbum());
             PickedPhoto.setTags(photo.getTags());
+            PickedPhoto.setDescription(photo.getDescription());
+            PickedPhoto.setLocalization(photo.getLocalization());
             ((MainActivity)context).showPost();
         });
-
-
-
     }
 
     @Override
@@ -67,17 +65,10 @@ public class HomePageAdapter extends RecyclerView.Adapter<HomePageAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView img;
-        private TextView username;
-        private TextView description;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             img = itemView.findViewById(R.id.photo);
-//            username = itemView.findViewById(R.id.usernamePost);
-//            username2 = itemView.findViewById(R.id.username);
-//            description = itemView.findViewById(R.id.description);
-            itemView.findViewById(R.id.homePagePost).setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,875));;
-
-//            img.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,500));
+            itemView.findViewById(R.id.homePagePost).setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 800));;
         }
     }
 }

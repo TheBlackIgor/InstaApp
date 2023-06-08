@@ -56,6 +56,11 @@ public class CreatePostActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        createPostBinding.maps.setOnClickListener(v->{
+            Intent intent = new Intent(this, MapActivity.class);
+            startActivity(intent);
+        });
+
         createPostBinding.createPost.setOnClickListener(v->{
             sendImage();
         });

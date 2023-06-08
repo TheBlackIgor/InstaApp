@@ -10,10 +10,6 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
-    <meta-data
-        android:name="com.google.android.geo.API_KEY"
-        android:value="AIzaSyAwu6FO-Vb-ITp39cSydpdr7e6yYjdHP5k" />
-
     <uses-feature android:name="android.hardware.camera" />
 
     <application
@@ -30,12 +26,24 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".views.ShowLocalizationActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".views.MapActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAwu6FO-Vb-ITp39cSydpdr7e6yYjdHP5k" />
+
         <activity
             android:name=".views.AddTagsActivity"
             android:exported="false">

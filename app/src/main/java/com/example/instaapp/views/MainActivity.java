@@ -91,8 +91,7 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.addPost:
                     replaceFragment(addPost, "addPost");
                     break;
-                case R.id.search:
-
+                case R.id.profile:
                     break;
             }
 
@@ -138,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("data", Context.MODE_PRIVATE);
         LocalUser.setToken(sharedPreferences.getString("token", ""));
         LocalUser.setName(sharedPreferences.getString("name", ""));
+        LocalUser.setShowingName(sharedPreferences.getString("showingName", ""));
     }
     private void logout(){
         Intent myIntent = new Intent(MainActivity.this, LoginActivity.class);

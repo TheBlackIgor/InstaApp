@@ -5,6 +5,7 @@ import java.util.Date;
 public class History {
     public String status;
     public long timestamp;
+    public String url;
 
     public String getStatus() {
         return status;
@@ -22,8 +23,17 @@ public class History {
         this.timestamp = timestamp;
     }
 
-    public History(String status, long timestamp) {
+    public History(String status, long timestamp, String url) {
         this.status = status;
         this.timestamp = timestamp;
+        this.url = url;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

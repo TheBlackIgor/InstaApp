@@ -8,13 +8,14 @@ public class PickedPhoto {
     private static String username;
     private static String postURL;
     private static String description;
-    private static ArrayList<Tag> tags;
+    private static ArrayList<String> tags;
+    private static String localization;
 
-    public static ArrayList<Tag> getTags() {
+    public static ArrayList<String> getTags() {
         return tags;
     }
 
-    public static void setTags(ArrayList<Tag> tags) {
+    public static void setTags(ArrayList<String> tags) {
         PickedPhoto.tags = tags;
     }
 
@@ -40,5 +41,13 @@ public class PickedPhoto {
 
     public static void setDescription(String description) {
         PickedPhoto.description = description;
+    }
+
+    public static String getLocalization() {
+        return localization;
+    }
+
+    public static void setLocalization(String localization) {
+        PickedPhoto.localization = localization;
     }
 }

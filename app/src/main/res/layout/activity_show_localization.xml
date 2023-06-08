@@ -6,22 +6,14 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.MapActivity"
+        tools:context=".view.ShowLocalizationActivity"
         android:orientation="vertical">
 
-
         <fragment
-            android:id="@+id/autocomplete_fragment"
-            android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-
-        <fragment
-            android:id="@+id/map_fragment"
+            android:id="@+id/map_fragment2"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".MapActivity" />
+            tools:context=".views.ShowLocalizationActivity" />
     </LinearLayout>
 </layout>

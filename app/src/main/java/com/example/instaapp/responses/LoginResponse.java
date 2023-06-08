@@ -4,6 +4,7 @@ public class LoginResponse {
     private boolean success;
     private String token;
     private String name;
+    public String showingName;
 
     public String getName() {
         return name;
@@ -48,4 +49,11 @@ public class LoginResponse {
         this.success = success;
     }
 
+    public String getShowingName() {
+        return showingName;
+    }
+
+    public void setShowingName(String showingName) {
+        this.showingName = showingName;
+    }
 }

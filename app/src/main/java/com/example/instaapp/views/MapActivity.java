@@ -1,13 +1,17 @@
 package com.example.instaapp.views;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -23,6 +27,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.AddressComponent;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
@@ -34,21 +39,19 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
-
-    ActivityMapBinding mapBinding;
+    private ActivityMapBinding mapBinding;
     private GoogleMap map;
-
     private List<Address> list;
     private Geocoder geocoder;
-
-
+    private SupportMapFragment mapFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mapBinding = ActivityMapBinding.inflate(getLayoutInflater());
         setContentView(mapBinding.getRoot());
 
-        SupportMapFragment mapFragment =
+
+        mapFragment =
                 (SupportMapFragment) getSupportFragmentManager()
                         .findFragmentById(R.id.map_fragment);
 
@@ -65,57 +68,29 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         autocompleteFragment.setActivityMode(AutocompleteActivityMode.FULLSCREEN);
         autocompleteFragment.getView().setBackgroundColor(0x0000ff);
+        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS_COMPONENTS));
 
-        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME));
 
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
 
             @Override
             public void onPlaceSelected(@NonNull Place place) {
                 try {
+                    Log.d("localization", place.getName());
                     geocode(place.getName());
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-                Log.i("xxx", "Place: " + place.getName() + ", " + place.getId());
-                NewPostFile.localization = place.getName();
+                NewPostFile.localization = place.getId();
             }
-
 
             @Override
             public void onError(@NonNull Status status) {
                 Log.i("xxx", "error: " + status);
             }
         });
-    }
-    private String[] REQUIRED_PERMISSIONS = new String[]{
-            "android.permission.ACCESS_FINE_LOCATION"
-    };
-
-
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-
-        map = googleMap;
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        map.setMyLocationEnabled(true);
-        map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-        map.getUiSettings().setZoomControlsEnabled(true);
-        map.getUiSettings().setCompassEnabled(true);
 
     }
-
     private void geocode(String locationName) throws IOException {
 
         list = geocoder.getFromLocationName(locationName, 1);
@@ -129,6 +104,33 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng , 10);
 //        map.moveCamera(cameraUpdate);
         map.animateCamera(cameraUpdate);
+    }
+
+
+
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+        map = googleMap;
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        map.setMyLocationEnabled(true);
+        map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        map.getUiSettings().setZoomControlsEnabled(true);
+        map.getUiSettings().setCompassEnabled(true);
+
+
+        LocationManager locationManager = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            locationManager = (LocationManager) getSystemService(MapActivity.this.LOCATION_SERVICE);
+        }
+        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+        if (location != null) {
+            LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f));
+        }
 
     }
 }

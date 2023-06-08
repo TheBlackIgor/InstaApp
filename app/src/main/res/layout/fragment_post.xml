@@ -27,6 +27,14 @@
             android:layout_height="wrap_content"
             android:text="Username"
             android:id="@+id/username"/>
+        <LinearLayout
+            android:layout_width="250dp"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/localization"
+            android:src="@drawable/map"/>
     </LinearLayout>
 
         <ImageView
@@ -38,21 +46,17 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="70">
+        android:layout_weight="70"
+        android:orientation="vertical">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Description"
             android:id="@+id/description"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tags"/>
     </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/tags"
-            android:layout_weight="60"
-            android:orientation="horizontal">
-
-        </LinearLayout>
-
-    </LinearLayout>
+</LinearLayout>
 </FrameLayout>

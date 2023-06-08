@@ -9,16 +9,21 @@ public class Photo {
     private String url;
     private String lastChange;
     private ArrayList<History> history;
-    private ArrayList<Tag> tags;
+    private ArrayList<String> tags;
+    private String localization;
+    private String description;
 
-    public Photo(long id, String album, String originalName, String url, String lastChange, ArrayList<History> history, ArrayList<Tag> tags) {
+
+    public Photo(long id, String album, String originalName, String url, String lastChange, ArrayList<History> history,String description, ArrayList<String> tags,String localization) {
         this.id = id;
         this.album = album;
         this.originalName = originalName;
         this.url = url;
         this.lastChange = lastChange;
+        this.description = description;
         this.history = history;
         this.tags = tags;
+        this.localization = localization;
     }
 
     public long getId() {
@@ -69,12 +74,33 @@ public class Photo {
         this.history = history;
     }
 
-    public ArrayList<Tag> getTags() {
+    public ArrayList<String> getTags() {
         return tags;
     }
 
-    public void setTags(ArrayList<Tag> tags) {
+    public void setTags(ArrayList<String> tags) {
         this.tags = tags;
+    }
+
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getLocalization() {
+        return localization;
+    }
+
+    public void setLocalization(String localization) {
+        this.localization = localization;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override
